@@ -1,0 +1,20 @@
+name: Update
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: termcraft-apt-update
+  cancel-in-progress: false
+jobs:
+  update:
+    uses: pagel-s/termcraft/.github/workflows/package-feeds.yml@29de61f97c9d3bbd71fc6a99484f86120f3b8071
+    with:
+      kind: apt
+      source_revision: 29de61f97c9d3bbd71fc6a99484f86120f3b8071
+    secrets:
+      APT_SIGNING_PRIVATE_KEY: ${{ secrets.APT_SIGNING_PRIVATE_KEY }}
